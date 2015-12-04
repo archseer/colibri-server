@@ -1,6 +1,8 @@
 defmodule Colibri.AlbumView do
   use Colibri.Web, :view
 
+  attributes [:title, :artist]
+
   def render("index.json", %{albums: albums}) do
     %{data: render_many(albums, Colibri.AlbumView, "album.json")}
   end

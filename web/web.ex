@@ -47,6 +47,9 @@ defmodule Colibri.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      # Serialize as JSONAPI
+      use JaSerializer.PhoenixView
+
       import Colibri.Router.Helpers
     end
   end
