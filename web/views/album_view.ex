@@ -1,6 +1,7 @@
 defmodule Colibri.AlbumView do
   use Colibri.Web, :view
 
+  location "/albums/:id"
   attributes [:title, :artist]
 
   def render("index.json", %{albums: albums}) do
