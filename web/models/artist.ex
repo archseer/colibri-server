@@ -1,16 +1,16 @@
-defmodule Colibri.Album do
+defmodule Colibri.Artist do
   use Colibri.Web, :model
 
-  schema "albums" do
-    field :title, :string
+  schema "artists" do
+    field :name, :string
 
     has_many :tracks, Colibri.Track
-    belongs_to :artist, Colibri.Artist
+    has_many :albums, Colibri.Album
 
     timestamps
   end
 
-  @required_fields ~w(title artist_id)
+  @required_fields ~w(name)
   @optional_fields ~w()
 
   @doc """

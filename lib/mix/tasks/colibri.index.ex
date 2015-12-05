@@ -27,6 +27,7 @@ defmodule Mix.Tasks.Colibri.Index do
     changeset = Track.changeset(%Track{}, data)
     case Repo.insert(changeset) do
       {:ok, _track} ->
+        IO.puts "Created!"
       {:error, changeset} ->
         IO.puts(inspect changeset.errors)
     end
