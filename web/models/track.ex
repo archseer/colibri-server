@@ -26,4 +26,16 @@ defmodule Colibri.Track do
     model
     |> cast(params, @required_fields, @optional_fields)
   end
+
+  def cover(track) do
+    glob = Path.join([
+      "priv/static",
+      Path.dirname(track.filename),
+      "/**/*.jpg"
+    ])
+    case Path.wildcard(glob) do
+      [h | _] -> Path.relative_to(h, "priv/static")
+      _ -> "cover.jpg"
+    end
+  end
 end

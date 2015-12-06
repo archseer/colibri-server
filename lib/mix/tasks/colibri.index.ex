@@ -27,24 +27,32 @@ defmodule Mix.Tasks.Colibri.Index do
   def create_track(data) do
     data = data
       |> Enum.filter(fn {_, v} -> v != nil end)
-      |> Enum.into(%{})
+      |> Enum.into(%{}, fn {key, val} -> {String.to_atom(key), val} end)
 
     album = Colibri.Album.find_or_create(
-      data["album"],
-      Colibri.Artist.find_or_create(data["albumartist"])
+      data.album,
+      Colibri.Artist.find_or_create(data.albumartist)
     )
-    set_coverart(album, data) unless album.cover
+
+    unless album.cover, do: set_coverart(album, data)
 
     data = data
-      |> Map.put("album_id", album.id)
-      |> Map.put("artist_id", Colibri.Artist.find_or_create(data["artist"]).id)
+      |> Map.put(:album_id, album.id)
+      |> Map.put(:artist_id, Colibri.Artist.find_or_create(data.artist).id)
 
-    changeset = Track.changeset(%Track{}, data)
-    case Colibri.Repo.insert(changeset) do
+    c = Track.changeset(%Track{}, data)
+    case Colibri.Repo.insert(c) do
       {:ok, track} ->
         IO.puts "Created #{track.title}"
       {:error, changeset} ->
         IO.puts(inspect changeset.errors)
+    end
+  end
+
+  def set_coverart(album, track) do
+    if cover = Track.cover(track) do
+      Colibri.Album.changeset(album, %{cover: cover})
+      |> Colibri.Repo.update!
     end
   end
 end

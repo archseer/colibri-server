@@ -28,7 +28,7 @@ defmodule Colibri.Artist do
   end
 
   def find_or_create(name) do
-    if artist = Colibri.Repo.one(from a in Colibri.Artist, where: a.name == ^name) do
+    if artist = Colibri.Repo.one(from a in Artist, where: a.name == ^name) do
       artist
     else
       Artist.changeset(%Artist{}, %{name: name})

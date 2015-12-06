@@ -2,7 +2,7 @@ defmodule Colibri.AlbumView do
   use Colibri.Web, :view
 
   location "/albums/:id"
-  attributes [:title]
+  attributes [:title, :cover]
 
   has_one :artist,
     serializer: Colibri.ArtistView,

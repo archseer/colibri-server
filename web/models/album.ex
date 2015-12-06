@@ -6,6 +6,7 @@ defmodule Colibri.Album do
 
   schema "albums" do
     field :title, :string
+    field :cover, :string
 
     has_many :tracks, Colibri.Track
     belongs_to :artist, Colibri.Artist
@@ -14,7 +15,7 @@ defmodule Colibri.Album do
   end
 
   @required_fields ~w(title artist_id)
-  @optional_fields ~w()
+  @optional_fields ~w(cover)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

@@ -7,8 +7,7 @@ defmodule Colibri.AlbumController do
 
   def index(conn, _params) do
     albums = Repo.all(Album)
-    #|> Repo.preload([:artist])
-    |> Repo.preload([:artist])
+    |> Repo.preload([:artist, :tracks])
     render(conn, :index, albums: albums, opts: [include: "artist"])
   end
 
