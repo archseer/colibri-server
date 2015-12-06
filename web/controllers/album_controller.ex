@@ -7,7 +7,9 @@ defmodule Colibri.AlbumController do
 
   def index(conn, _params) do
     albums = Repo.all(Album)
-    render(conn, "index.json", albums: albums)
+    #|> Repo.preload([:artist])
+    |> Repo.preload([:artist])
+    render(conn, :index, albums: albums, opts: [include: "artist"])
   end
 
   def create(conn, %{"album" => album_params}) do
@@ -18,7 +20,7 @@ defmodule Colibri.AlbumController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", album_path(conn, :show, album))
-        |> render("show.json", album: album)
+        |> render(:show, album: album)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -28,7 +30,8 @@ defmodule Colibri.AlbumController do
 
   def show(conn, %{"id" => id}) do
     album = Repo.get!(Album, id)
-    render(conn, "show.json", album: album)
+    |> Repo.preload([:artist, :tracks])
+    render(conn, :show, album: album, opts: [include: "tracks"])
   end
 
   def update(conn, %{"id" => id, "album" => album_params}) do
@@ -37,7 +40,7 @@ defmodule Colibri.AlbumController do
 
     case Repo.update(changeset) do
       {:ok, album} ->
-        render(conn, "show.json", album: album)
+        render(conn, :show, album: album)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

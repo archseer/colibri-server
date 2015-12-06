@@ -10,5 +10,19 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-Colibri.Repo.insert!(%Colibri.Album{title: "Butterfly", artist: "fox capture plan"})
+artist = Colibri.Repo.insert!(%Colibri.Artist{name: "fox capture plan"})
 
+album = Ecto.Model.build(artist, :albums, title: "Butterfly")
+album = Colibri.Repo.insert!(album)
+
+
+data = [
+  %{title: "The Beginning Of", duration: 68},
+  %{title: "The Last Story of the Myth", duration: 188}
+]
+
+data |> Enum.each fn x ->
+  data = x |> Map.merge(%{filename: "a", artist_id: artist.id})
+  track = Ecto.Model.build(album, :tracks, data)
+  Colibri.Repo.insert!(track)
+end

@@ -4,7 +4,7 @@ defmodule Colibri.Track do
   schema "tracks" do
     field :title, :string
     field :duration, :integer
-    field :disc, :integer
+    field :disc, :integer, default: 1
     field :filename, :string
 
     belongs_to :album, Colibri.Album

@@ -38,11 +38,10 @@ end
 
 module Tagger
   def self.relative_to path
-    Pathname.new(path).relative_path_from(Pathname.new(Dir.pwd)).to_s
+    Pathname.new(path).relative_path_from(Pathname.new(File.join(Dir.pwd, "priv/static"))).to_s
   end
   def self.generate_db
-    files = Dir["#{File.dirname(__FILE__)}/../public/music/**/*.mp3"].uniq #symlink follow {,/*/**}
-    files = Dir["/Users/speed/Downloads/**/*.mp3"].uniq #symlink follow {,/*/**}
+    files = Dir["#{Dir.pwd}/priv/static/music/**/*.mp3"].uniq #symlink follow {,/*/**}
     files.each do |filename|
       file = Musicfile.new filename
 
