@@ -1,6 +1,9 @@
 defmodule Colibri.Artist do
   use Colibri.Web, :model
 
+  alias __MODULE__
+  alias Colibri.Repo
+
   schema "artists" do
     field :name, :string
 
@@ -22,5 +25,14 @@ defmodule Colibri.Artist do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+  end
+
+  def find_or_create(name) do
+    if artist = Colibri.Repo.one(from a in Colibri.Artist, where: a.name == ^name) do
+      artist
+    else
+      Artist.changeset(%Artist{}, %{name: name})
+      |> Repo.insert!
+    end
   end
 end
