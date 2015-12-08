@@ -9,6 +9,6 @@ defmodule Colibri.AlbumView do
     include: true
 
   has_many :tracks,
-    serializer: Colibri.TrackView,
     link: "/albums/:id/tracks"
+
 end
