@@ -7,7 +7,7 @@ defmodule Colibri.TrackController do
 
   def index(conn, %{"album_id" => album_id}) do
     tracks = Repo.all(from t in Track, where: t.album_id == ^album_id)
-    render(conn, "index.json", tracks: tracks)
+    render(conn, :index, tracks: tracks)
   end
 
   def create(conn, %{"track" => track_params}) do
@@ -18,7 +18,7 @@ defmodule Colibri.TrackController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", track_path(conn, :show, track))
-        |> render("show.json", track: track)
+        |> render(:show, track: track)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -28,7 +28,7 @@ defmodule Colibri.TrackController do
 
   def show(conn, %{"id" => id}) do
     track = Repo.get!(Track, id)
-    render(conn, "show.json", track: track)
+    render(conn, :show, track: track)
   end
 
   def update(conn, %{"id" => id, "track" => track_params}) do
@@ -37,7 +37,7 @@ defmodule Colibri.TrackController do
 
     case Repo.update(changeset) do
       {:ok, track} ->
-        render(conn, "show.json", track: track)
+        render(conn, :show, track: track)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
