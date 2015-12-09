@@ -5,8 +5,8 @@ defmodule Colibri.TrackController do
 
   plug :scrub_params, "track" when action in [:create, :update]
 
-  def index(conn, _params) do
-    tracks = Repo.all(Track)
+  def index(conn, %{"album_id" => album_id}) do
+    tracks = Repo.all(from t in Track, where: t.album_id == ^album_id)
     render(conn, "index.json", tracks: tracks)
   end
 
