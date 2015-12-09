@@ -34,7 +34,8 @@ defmodule Colibri.Album do
       where: a.title == ^title and a.artist_id == ^artist.id) do
         album
     else
-      Album.changeset(%Album{}, %{title: title, artist_id: artist.id})
+      %Album{}
+      |> Album.changeset(%{title: title, artist_id: artist.id})
       |> Repo.insert!
     end
   end

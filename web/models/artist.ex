@@ -31,7 +31,8 @@ defmodule Colibri.Artist do
     if artist = Colibri.Repo.one(from a in Artist, where: a.name == ^name) do
       artist
     else
-      Artist.changeset(%Artist{}, %{name: name})
+      %Artist{}
+      |> Artist.changeset(%{name: name})
       |> Repo.insert!
     end
   end
