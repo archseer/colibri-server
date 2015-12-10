@@ -36,10 +36,13 @@ defmodule Mix.Tasks.Colibri.Index do
 
     unless album.cover, do: set_coverart(album, data)
 
-    data = data
-      |> Map.put(:album_id, album.id)
-      |> Map.put(:artist_id, Colibri.Artist.find_or_create(data.artist).id)
+    data
+    |> Map.put(:album_id, album.id)
+    |> Map.put(:artist_id, Colibri.Artist.find_or_create(data.artist).id)
+    |> insert_track
+  end
 
+  def insert_track(data)
     c = Track.changeset(%Track{}, data)
     case Colibri.Repo.insert(c) do
       {:ok, track} ->
@@ -51,7 +54,8 @@ defmodule Mix.Tasks.Colibri.Index do
 
   def set_coverart(album, track) do
     if cover = Track.cover(track) do
-      Colibri.Album.changeset(album, %{cover: cover})
+      album
+      |> Colibri.Album.changeset(%{cover: cover})
       |> Colibri.Repo.update!
     end
   end
