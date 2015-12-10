@@ -26,15 +26,13 @@ defmodule Mix.Tasks.Colibri.Index do
 
   def create_track(data) do
     data = data
-      |> Enum.filter(fn {_, v} -> v != nil end)
-      |> Enum.into(%{}, fn {key, val} -> {String.to_atom(key), val} end)
+    |> Enum.filter(fn {_, v} -> v != nil end)
+    |> Enum.into(%{}, fn {key, val} -> {String.to_atom(key), val} end)
 
-    album = Colibri.Album.find_or_create(
-      data.album,
-      Colibri.Artist.find_or_create(data.albumartist)
-    )
+    album = data.album
+    |> Colibri.Album.find_or_create(data.albumartist |> Colibri.Artist.find_or_create)
 
-    unless album.cover, do: set_coverart(album, data)
+    unless album.cover, do: data |> Track.cover |> set_coverart(album)
 
     data
     |> Map.put(:album_id, album.id)
@@ -52,11 +50,10 @@ defmodule Mix.Tasks.Colibri.Index do
     end
   end
 
-  def set_coverart(album, track) do
-    if cover = Track.cover(track) do
-      album
-      |> Colibri.Album.changeset(%{cover: cover})
-      |> Colibri.Repo.update!
-    end
+  def set_coverart(cover, album) do: nil
+  def set_coverart(cover, album) do
+    album
+    |> Colibri.Album.changeset(%{cover: cover})
+    |> Colibri.Repo.update!
   end
 end
