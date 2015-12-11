@@ -40,7 +40,7 @@ defmodule Mix.Tasks.Colibri.Index do
     |> insert_track
   end
 
-  def insert_track(data)
+  def insert_track(data) do
     c = Track.changeset(%Track{}, data)
     case Colibri.Repo.insert(c) do
       {:ok, track} ->
@@ -50,7 +50,7 @@ defmodule Mix.Tasks.Colibri.Index do
     end
   end
 
-  def set_coverart(cover, album) do: nil
+  def set_coverart(cover, album), do: nil
   def set_coverart(cover, album) do
     album
     |> Colibri.Album.changeset(%{cover: cover})
