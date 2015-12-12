@@ -50,7 +50,7 @@ defmodule Mix.Tasks.Colibri.Index do
     end
   end
 
-  def set_coverart(cover, album), do: nil
+  def set_coverart(nil, album), do: nil
   def set_coverart(cover, album) do
     album
     |> Colibri.Album.changeset(%{cover: cover})
