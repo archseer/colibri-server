@@ -32,7 +32,9 @@ defmodule Colibri.Track do
       Path.join(["priv/static", Path.dirname(track.filename)])
       |> File.cd!(fn () -> Path.wildcard("*.{jpg,jpeg,png}") end)
     case glob do
-      [h | _] -> Path.relative_to(h, "priv/static")
+      [h | _] ->
+        Path.join([Path.dirname(track.filename), h])
+        |> Path.relative_to("priv/static")
       _ -> "cover.jpg"
     end
   end
