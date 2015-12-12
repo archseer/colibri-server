@@ -30,7 +30,7 @@ defmodule Mix.Tasks.Colibri.Index do
     |> Enum.into(%{}, fn {key, val} -> {String.to_atom(key), val} end)
 
     album = data.album
-    |> Colibri.Album.find_or_create(data.albumartist |> Colibri.Artist.find_or_create)
+    |> Colibri.Album.find_or_create((data[:albumartist] || data.artist) |> Colibri.Artist.find_or_create)
 
     unless album.cover, do: data |> Track.cover |> set_coverart(album)
 
