@@ -35,7 +35,7 @@ defmodule Colibri.Track do
       [h | _] ->
         Path.join([Path.dirname(track.filename), h])
         |> Path.relative_to("priv/static")
-      _ -> "cover.jpg"
+      _ -> nil
     end
   end
 end

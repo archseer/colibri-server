@@ -3,4 +3,5 @@ defmodule Colibri.EmbeddedArtistView do
 
   location "/artists/:id"
   attributes [:name]
+  def type, do: "artist"
 end
