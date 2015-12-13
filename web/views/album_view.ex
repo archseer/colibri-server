@@ -5,10 +5,9 @@ defmodule Colibri.AlbumView do
   attributes [:title, :cover]
 
   has_one :artist,
-    serializer: Colibri.ArtistView,
+    serializer: Colibri.EmbeddedArtistView,
     include: true
 
   has_many :tracks,
     link: "/albums/:id/tracks"
-
 end

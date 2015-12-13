@@ -11,7 +11,9 @@ defmodule Colibri.Router do
 
     get "/", PageController, :index
 
-    resources "/artists", ArtistController, except: [:new, :edit]
+    resources "/artists", ArtistController, except: [:new, :edit] do
+      resources "/albums", AlbumController, only: [:index]
+    end
     resources "/tracks", TrackController, only: [:show]
     resources "/albums", AlbumController, except: [:new, :edit] do
       resources "/tracks", TrackController, except: [:new, :edit]

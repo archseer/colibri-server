@@ -5,11 +5,18 @@ defmodule Colibri.AlbumController do
 
   plug :scrub_params, "album" when action in [:create, :update]
 
+  # /artists/:artist_id/albums
+  def index(conn, %{"artist_id" => artist_id}) do
+    albums = Repo.all(from a in Album, where: a.artist_id == ^artist_id)
+    |> Repo.preload([:artist])
+    render(conn, :index, albums: albums)
+  end
+
   def index(conn, _params) do
     albums = Album
     |> Repo.all
     |> Repo.preload([:artist])
-    render(conn, :index, albums: albums, opts: [include: "artist"])
+    render(conn, :index, albums: albums)
   end
 
   def create(conn, %{"album" => album_params}) do

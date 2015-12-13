@@ -3,4 +3,7 @@ defmodule Colibri.ArtistView do
 
   location "/artists/:id"
   attributes [:name]
+
+  has_many :albums,
+    link: "/artists/:id/albums"
 end
