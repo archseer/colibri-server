@@ -10,6 +10,9 @@ defmodule Colibri.Track do
     belongs_to :album, Colibri.Album
     belongs_to :artist, Colibri.Artist
 
+    has_many :playlist_tracks, Colibri.PlaylistTrack
+    has_many :playlists, through: [:playlist_tracks, :playlist]
+
     timestamps
   end
 
