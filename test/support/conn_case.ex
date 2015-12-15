@@ -21,7 +21,7 @@ defmodule Colibri.ConnCase do
       use Phoenix.ConnTest
 
       alias Colibri.Repo
-      import Ecto.Model
+      import Ecto
       import Ecto.Query, only: [from: 2]
 
       import Colibri.Router.Helpers

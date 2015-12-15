@@ -18,7 +18,7 @@ defmodule Colibri.Web do
 
   def model do
     quote do
-      use Ecto.Model
+      use Ecto.Schema
 
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
@@ -30,7 +30,7 @@ defmodule Colibri.Web do
       use Phoenix.Controller
 
       alias Colibri.Repo
-      import Ecto.Model
+      import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
 
       import Colibri.Router.Helpers
@@ -65,7 +65,7 @@ defmodule Colibri.Web do
       use Phoenix.Channel
 
       alias Colibri.Repo
-      import Ecto.Model
+      import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
     end
   end

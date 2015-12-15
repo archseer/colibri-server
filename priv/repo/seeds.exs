@@ -12,7 +12,7 @@
 
 artist = Colibri.Repo.insert!(%Colibri.Artist{name: "fox capture plan"})
 
-album = Ecto.Model.build(artist, :albums, title: "Butterfly")
+album = Ecto.build_assoc(artist, :albums, title: "Butterfly")
 album = Colibri.Repo.insert!(album)
 
 
@@ -23,6 +23,6 @@ data = [
 
 data |> Enum.each fn x ->
   data = x |> Map.merge(%{filename: "a", artist_id: artist.id})
-  track = Ecto.Model.build(album, :tracks, data)
+  track = Ecto.build_assoc(album, :tracks, data)
   Colibri.Repo.insert!(track)
 end

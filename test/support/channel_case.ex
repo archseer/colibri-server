@@ -21,7 +21,7 @@ defmodule Colibri.ChannelCase do
       use Phoenix.ChannelTest
 
       alias Colibri.Repo
-      import Ecto.Model
+      import Ecto
       import Ecto.Query, only: [from: 2]
 
 

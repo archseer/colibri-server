@@ -17,7 +17,7 @@ defmodule Colibri.ModelCase do
   using do
     quote do
       alias Colibri.Repo
-      import Ecto.Model
+      import Ecto
       import Ecto.Query, only: [from: 2]
       import Colibri.ModelCase
     end
