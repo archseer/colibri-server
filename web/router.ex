@@ -3,7 +3,6 @@ defmodule Colibri.Router do
 
   pipeline :api do
     plug :accepts, ["json-api"]
-    plug Corsica, origins: "*", allow_headers: ["accept", "content-type"]
   end
 
   scope "/", Colibri do

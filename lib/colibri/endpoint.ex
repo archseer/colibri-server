@@ -35,5 +35,6 @@ defmodule Colibri.Endpoint do
     key: "_colibri_key",
     signing_salt: "IArQZcA8"
 
+  plug Corsica, origins: "*", allow_headers: ["accept", "content-type"]
   plug Colibri.Router
 end
