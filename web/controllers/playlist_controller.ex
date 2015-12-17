@@ -3,14 +3,14 @@ defmodule Colibri.PlaylistController do
 
   alias Colibri.Playlist
 
-  plug :scrub_params, "playlist" when action in [:create, :update]
+  # plug :scrub_params, "playlist" when action in [:create, :update]
 
   def index(conn, _params) do
     playlists = Repo.all(Playlist)
-    render(conn, "index.json", playlists: playlists)
+    render(conn, :index, playlists: playlists)
   end
 
-  def create(conn, %{"playlist" => playlist_params}) do
+  def create(conn, %{"data" => %{"attributes" => playlist_params, "type" => "playlists"}}) do
     changeset = Playlist.changeset(%Playlist{}, playlist_params)
 
     case Repo.insert(changeset) do
@@ -18,7 +18,7 @@ defmodule Colibri.PlaylistController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", playlist_path(conn, :show, playlist))
-        |> render("show.json", playlist: playlist)
+        |> render(:show, playlist: playlist)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -28,7 +28,7 @@ defmodule Colibri.PlaylistController do
 
   def show(conn, %{"id" => id}) do
     playlist = Repo.get!(Playlist, id)
-    render(conn, "show.json", playlist: playlist)
+    render(conn, :show, playlist: playlist)
   end
 
   def update(conn, %{"id" => id, "playlist" => playlist_params}) do
@@ -37,7 +37,7 @@ defmodule Colibri.PlaylistController do
 
     case Repo.update(changeset) do
       {:ok, playlist} ->
-        render(conn, "show.json", playlist: playlist)
+        render(conn, :show, playlist: playlist)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

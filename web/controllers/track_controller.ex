@@ -5,8 +5,16 @@ defmodule Colibri.TrackController do
 
   plug :scrub_params, "track" when action in [:create, :update]
 
+  # /album/:id/tracks
   def index(conn, %{"album_id" => album_id}) do
+    # TODO: Repo.all assoc(%Colibri.Album{id: album_id}, :tracks)
     tracks = Repo.all(from t in Track, where: t.album_id == ^album_id)
+    render(conn, :index, tracks: tracks)
+  end
+
+  # /playlist/:id/tracks
+  def index(conn, %{"playlist_id" => playlist_id}) do
+    tracks = Repo.all assoc(%Colibri.Playlist{id: playlist_id}, :tracks)
     render(conn, :index, tracks: tracks)
   end
 
