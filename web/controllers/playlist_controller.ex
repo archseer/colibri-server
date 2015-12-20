@@ -2,6 +2,7 @@ defmodule Colibri.PlaylistController do
   use Colibri.Web, :controller
 
   alias Colibri.Playlist
+  alias Colibri.PlaylistTrack
 
   # plug :scrub_params, "playlist" when action in [:create, :update]
 
@@ -31,11 +32,24 @@ defmodule Colibri.PlaylistController do
     render(conn, :show, playlist: playlist)
   end
 
-  def update(conn, %{"id" => id, "playlist" => playlist_params}) do
+  def update(conn, %{"id" => id, "data" => %{"attributes" => playlist_params,
+                                             "relationships" => %{"tracks" => %{"data" => tracks}},
+                                             "type" => "playlists"}}) do
     playlist = Repo.get!(Playlist, id)
     changeset = Playlist.changeset(playlist, playlist_params)
 
-    case Repo.update(changeset) do
+    resp = Repo.transaction fn ->
+      p = Repo.update!(changeset)
+      # remove all tracks
+      PlaylistTrack
+      |> where(playlist_id: ^playlist.id)
+      |> Repo.delete_all
+      # (re-)insert tracks
+      tracks |> Enum.each(&Playlist.add_track(playlist, &1))
+      p
+    end
+
+    case resp do
       {:ok, playlist} ->
         render(conn, :show, playlist: playlist)
       {:error, changeset} ->

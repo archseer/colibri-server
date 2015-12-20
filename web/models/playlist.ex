@@ -1,6 +1,8 @@
 defmodule Colibri.Playlist do
   use Colibri.Web, :model
 
+  alias Colibri.PlaylistTrack
+
   schema "playlists" do
     field :title, :string
 
@@ -22,5 +24,11 @@ defmodule Colibri.Playlist do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+  end
+
+  def add_track(playlist, %{"id" => track_id}) do
+    %PlaylistTrack{}
+    |> PlaylistTrack.changeset(%{playlist_id: playlist.id, track_id: track_id})
+    |> Colibri.Repo.insert!
   end
 end

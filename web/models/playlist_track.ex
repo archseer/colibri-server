@@ -9,7 +9,7 @@ defmodule Colibri.PlaylistTrack do
     belongs_to :playlist, Colibri.Playlist
   end
 
-  @required_fields ~w(track_id, playlist_id)
+  @required_fields ~w(track_id playlist_id)
   @optional_fields ~w()
 
   @doc """
