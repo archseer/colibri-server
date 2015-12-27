@@ -4,7 +4,7 @@ require 'pathname'
 
 class Musicfile
 
-  attr_reader :title, :artist, :album, :year, :track, :duration,
+  attr_reader :title, :artist, :album, :year, :pos, :duration,
     :disc, :albumartist, :total_tracks, :total_discs, :genre,
     :bpm
 
@@ -21,7 +21,7 @@ class Musicfile
     @artist = tag.artist || old_tag.artist
     @album = tag.album || old_tag.album
     @year = tag.year || old_tag.year
-    @track = tag.track || old_tag.track
+    @pos = tag.track || old_tag.track
     @duration = @file.audio_properties.length
     @disc = disc[0]
 
@@ -50,8 +50,8 @@ module Tagger
         artist: file.artist,
         album:  file.album,
         year:   file.year,
-        track:  file.track,
         duration: file.duration,
+        pos:  file.pos,
         disc: file.disc,
         albumartist: file.albumartist,
         #total_tracks:file.total_tracks,

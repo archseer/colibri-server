@@ -4,6 +4,7 @@ defmodule Colibri.Track do
   schema "tracks" do
     field :title, :string
     field :duration, :integer
+    field :pos,  :integer, default: 0
     field :disc, :integer, default: 1
     field :filename, :string
 
@@ -17,7 +18,7 @@ defmodule Colibri.Track do
   end
 
   @required_fields ~w(title duration disc filename album_id artist_id)
-  @optional_fields ~w()
+  @optional_fields ~w(pos)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

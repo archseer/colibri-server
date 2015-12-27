@@ -7,8 +7,9 @@ defmodule Colibri.TrackController do
 
   # /album/:id/tracks
   def index(conn, %{"album_id" => album_id}) do
-    # TODO: Repo.all assoc(%Colibri.Album{id: album_id}, :tracks)
-    tracks = Repo.all(from t in Track, where: t.album_id == ^album_id)
+    tracks = assoc(%Colibri.Album{id: album_id}, :tracks)
+    |> order_by([:pos, :id])
+    |> Repo.all
     render(conn, :index, tracks: tracks)
   end
 

@@ -31,7 +31,7 @@ defmodule Colibri.Web do
 
       alias Colibri.Repo
       import Ecto
-      import Ecto.Query, only: [from: 1, from: 2, where: 2]
+      import Ecto.Query, only: [from: 1, from: 2, where: 2, order_by: 2]
 
       import Colibri.Router.Helpers
     end
