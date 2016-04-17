@@ -34,3 +34,10 @@ config :phoenix, :format_encoders,
 config :plug, :mimes, %{
   "application/vnd.api+json" => ["json-api"]
 }
+
+config :guardian, Guardian,
+  issuer: "Colibri",
+  ttl: {30, :days},
+  verify_issuer: true,
+  secret_key: 'cQou3GD1KL4LFz2r01tlQDWZQh3gqvJ6nOu4PRnajnaxPyE5hgMtPzPOHhT0kt2g',
+  serializer: Colibri.GuardianSerializer

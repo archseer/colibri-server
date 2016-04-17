@@ -10,6 +10,8 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
+Colibri.User.changeset(%Colibri.User{}, %{username: "test", email: "test@test.com", password: "test"})
+
 artist = Colibri.Repo.insert!(%Colibri.Artist{name: "fox capture plan"})
 
 album = Ecto.build_assoc(artist, :albums, title: "Butterfly")

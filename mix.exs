@@ -19,7 +19,7 @@ defmodule Colibri.Mixfile do
   def application do
     [mod: {Colibri, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
@@ -40,6 +40,8 @@ defmodule Colibri.Mixfile do
      {:ja_serializer, "~> 0.8"},
      {:exjsx, "~> 3.2.0"},
      {:credo, "~> 0.3.0", only: [:dev, :test]},
+     {:comeonin, "~> 2.4"},
+     {:guardian, "~> 0.10.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
