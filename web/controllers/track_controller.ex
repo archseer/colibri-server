@@ -7,16 +7,18 @@ defmodule Colibri.TrackController do
 
   # /album/:id/tracks
   def index(conn, %{"album_id" => album_id}) do
-    tracks = assoc(%Colibri.Album{id: album_id}, :tracks)
+    tracks =
+    %Colibri.Album{id: album_id}
+    |> assoc(:tracks)
     |> order_by([:pos, :id])
     |> Repo.all
-    render(conn, :index, tracks: tracks)
+    render(conn, :index, data: tracks)
   end
 
   # /playlist/:id/tracks
   def index(conn, %{"playlist_id" => playlist_id}) do
     tracks = Repo.all assoc(%Colibri.Playlist{id: playlist_id}, :tracks)
-    render(conn, :index, tracks: tracks)
+    render(conn, :index, data: tracks)
   end
 
   def create(conn, %{"track" => track_params}) do
@@ -27,7 +29,7 @@ defmodule Colibri.TrackController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", track_path(conn, :show, track))
-        |> render(:show, track: track)
+        |> render(:show, data: track)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -37,7 +39,7 @@ defmodule Colibri.TrackController do
 
   def show(conn, %{"id" => id}) do
     track = Repo.get!(Track, id)
-    render(conn, :show, track: track)
+    render(conn, :show, data: track)
   end
 
   def update(conn, %{"id" => id, "track" => track_params}) do
@@ -46,7 +48,7 @@ defmodule Colibri.TrackController do
 
     case Repo.update(changeset) do
       {:ok, track} ->
-        render(conn, :show, track: track)
+        render(conn, :show, data: track)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

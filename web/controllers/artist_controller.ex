@@ -7,7 +7,7 @@ defmodule Colibri.ArtistController do
 
   def index(conn, _params) do
     artists = Repo.all(Artist)
-    render(conn, "index.json", artists: artists)
+    render(conn, :index, data: artists)
   end
 
   def create(conn, %{"artist" => artist_params}) do
@@ -18,7 +18,7 @@ defmodule Colibri.ArtistController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", artist_path(conn, :show, artist))
-        |> render("show.json", artist: artist)
+        |> render(:show, data: artist)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -28,7 +28,7 @@ defmodule Colibri.ArtistController do
 
   def show(conn, %{"id" => id}) do
     artist = Repo.get!(Artist, id)
-    render(conn, "show.json", artist: artist)
+    render(conn, :show, artist: artist)
   end
 
   def update(conn, %{"id" => id, "artist" => artist_params}) do
@@ -37,7 +37,7 @@ defmodule Colibri.ArtistController do
 
     case Repo.update(changeset) do
       {:ok, artist} ->
-        render(conn, "show.json", artist: artist)
+        render(conn, :show, data: artist)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)

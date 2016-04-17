@@ -37,9 +37,9 @@ defmodule Colibri.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
      {:corsica, "~> 0.4"},
-     {:ja_serializer, "~> 0.6"},
+     {:ja_serializer, "~> 0.8"},
      {:exjsx, "~> 3.2.0"},
-     {:credo, "~> 0.2.0", only: [:dev, :test]}]
+     {:credo, "~> 0.3.0", only: [:dev, :test]},
   end
 
   # Aliases are shortcut or tasks specific to the current project.

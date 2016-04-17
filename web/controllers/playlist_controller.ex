@@ -8,7 +8,7 @@ defmodule Colibri.PlaylistController do
 
   def index(conn, _params) do
     playlists = Repo.all(Playlist)
-    render(conn, :index, playlists: playlists)
+    render(conn, :index, data: playlists)
   end
 
   def create(conn, %{"data" => %{"attributes" => playlist_params, "type" => "playlists"}}) do
@@ -19,7 +19,7 @@ defmodule Colibri.PlaylistController do
         conn
         |> put_status(:created)
         |> put_resp_header("location", playlist_path(conn, :show, playlist))
-        |> render(:show, playlist: playlist)
+        |> render(:show, data: playlist)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -29,7 +29,7 @@ defmodule Colibri.PlaylistController do
 
   def show(conn, %{"id" => id}) do
     playlist = Repo.get!(Playlist, id)
-    render(conn, :show, playlist: playlist)
+    render(conn, :show, data: playlist)
   end
 
   def update(conn, %{"id" => id, "data" => %{"attributes" => playlist_params,
@@ -51,7 +51,7 @@ defmodule Colibri.PlaylistController do
 
     case resp do
       {:ok, playlist} ->
-        render(conn, :show, playlist: playlist)
+        render(conn, :show, data: playlist)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
