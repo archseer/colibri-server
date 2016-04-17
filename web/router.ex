@@ -2,7 +2,7 @@ defmodule Colibri.Router do
   use Colibri.Web, :router
 
   pipeline :api do
-    plug :accepts, ["json-api"]
+    plug :accepts, ["json", "json-api"]
     plug Guardian.Plug.VerifyHeader
     plug Guardian.Plug.LoadResource
     plug JaSerializer.Deserializer
