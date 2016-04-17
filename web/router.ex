@@ -5,14 +5,22 @@ defmodule Colibri.Router do
     plug :accepts, ["json-api"]
     plug Guardian.Plug.VerifyHeader
     plug Guardian.Plug.LoadResource
+    plug JaSerializer.Deserializer
+  end
+
+  pipeline :auth do
+    plug Guardian.Plug.EnsureAuthenticated, handler: Colibri.AuthErrorHandler
   end
 
   scope "/", Colibri do
     pipe_through :api
+    post "/login", SessionController, :create, as: :login
+  end
+
+  scope "/", Colibri do
+    pipe_through [:api, :auth]
 
     get "/", PageController, :index
-
-    post "/login", SessionController, :create, as: :login
 
     resources "/users", UserController, except: [:new, :edit]
 
