@@ -20,6 +20,7 @@ defmodule Colibri.SessionController do
 
   defp login_failed(conn) do
     conn
+    |> put_status(:unauthorized)
     |> json(%{errors: ["Invalid username/password combination!"]})
     |> halt
   end
