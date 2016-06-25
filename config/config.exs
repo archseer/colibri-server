@@ -11,6 +11,7 @@ config :colibri, Colibri.Endpoint,
   root: Path.dirname(__DIR__),
   secret_key_base: "POeGwVamCxRomglQI+rOzEqbo30sWbyX6auoFb0dfy9Qzs6zP/vvpUmOxseiR/BW",
   render_errors: [accepts: ~w(html json)],
+  ecto_repos: [Colibri.Repo],
   pubsub: [name: Colibri.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
