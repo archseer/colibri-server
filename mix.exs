@@ -6,7 +6,7 @@ defmodule Colibri.Mixfile do
      version: "0.0.1",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
-     compilers: [:phoenix] ++ Mix.compilers,
+     compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases,
@@ -19,7 +19,7 @@ defmodule Colibri.Mixfile do
   def application do
     [mod: {Colibri, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex, :comeonin]]
+                    :phoenix_ecto, :postgrex, :gettext, :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
@@ -36,6 +36,7 @@ defmodule Colibri.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
+     {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:corsica, "~> 0.4"},
      {:ja_serializer, "~> 0.10.0"},

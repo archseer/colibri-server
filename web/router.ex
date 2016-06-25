@@ -5,6 +5,7 @@ defmodule Colibri.Router do
     plug :accepts, ["json", "json-api"]
     plug Guardian.Plug.VerifyHeader
     plug Guardian.Plug.LoadResource
+    #plug JaSerializer.ContentTypeNegotiation
     plug JaSerializer.Deserializer
   end
 

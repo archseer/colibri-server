@@ -51,6 +51,8 @@ defmodule Colibri.Web do
       use JaSerializer.PhoenixView
 
       import Colibri.Router.Helpers
+      import Colibri.ErrorHelpers
+      import Colibri.Gettext
     end
   end
 
